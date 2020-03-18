@@ -3,15 +3,10 @@ spring:
     charset: UTF-8
     location: classpath:banner.txt
   datasource:
-    url: jdbc:mysql://localhost:3306/pm?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/soleador_db?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-      enabled: true
   jpa:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL55Dialect
@@ -27,14 +22,3 @@ server:
     whitelabel:
       enabled: true
   port: 8080
-  mail:
-      host: smtp.gmail.com
-      port: 587
-      username: lisandroscofano@gmail.com
-      password: ovtejyorbmnxfqfo
-      properties:
-          mail:
-              smtp:
-                  auth: true
-                  starttls:
-                      enable: true
