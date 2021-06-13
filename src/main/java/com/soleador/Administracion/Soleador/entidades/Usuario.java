@@ -32,7 +32,6 @@ public class Usuario implements Serializable{
 	
 	private String usuario;
 	private String clave1;
-	private String clave2;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date alta;

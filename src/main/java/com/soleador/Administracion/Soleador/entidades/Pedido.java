@@ -2,19 +2,20 @@ package com.soleador.Administracion.Soleador.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.soleador.Administracion.Soleador.enumeraciones.TipoFlete;
+import com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido;
+import com.soleador.Administracion.Soleador.enumeraciones.LugarPagoFlete;
 
 import lombok.Data;
 
@@ -35,21 +36,23 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	private Cliente cliente;
 	
-	@OneToMany
-	private List<ItemPedido> itemsPedido;
-	
-	private Double total;
-	private Double totalCobrado;
-	private Boolean estaCobrado;	
-	private Boolean estaEntregado;
+	@ManyToOne
 	private Transporte transporte;
-	private Double reembolso;
-	private TipoFlete tipoFlete;
+	
+	private boolean contraReembolso;
+	
+	@Enumerated(EnumType.STRING)
+	private LugarPagoFlete tipoFlete;
+	
+	@Enumerated(EnumType.STRING)
+	private EstadoPedido estadoPedido = EstadoPedido.PENDIENTE;
+	
+	private String factura;
 	
 	@ManyToOne
 	private Pedido pedido;
 	
-	private Double importe;
+	private Double importePedido;
 	
 	private String observaciones;
 

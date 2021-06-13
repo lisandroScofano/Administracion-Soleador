@@ -37,6 +37,10 @@ public class OrdenRecepcion implements Serializable {
 
 	@ManyToOne
 	private Envase envase;
+	
+	@ManyToOne
+	private PagoProveedor pago;
+	
 	private Double precioKg;
 	private Double total;
 	private Double totalPagado;

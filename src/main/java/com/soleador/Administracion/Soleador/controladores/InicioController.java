@@ -7,15 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class InicioController {
-	
+
 	@GetMapping("/")
 	public String inicio() {
 		return "inicio.html";
 	}
-	
+
 	@GetMapping("/signin")
 	public String log() {
 		return "signin.html";
+	}
+
+	@GetMapping("dashboard")
+	public String dashboard() {
+		return "acopio-list.html";
+
 	}
 
 }

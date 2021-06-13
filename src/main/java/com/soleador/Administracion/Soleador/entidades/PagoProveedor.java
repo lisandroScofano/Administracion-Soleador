@@ -2,12 +2,11 @@ package com.soleador.Administracion.Soleador.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,8 +28,8 @@ public class PagoProveedor implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
-	@OneToMany
-	private List<OrdenRecepcion> oredenesRecepcion;
+	@ManyToOne
+	private Proveedor proveedor;
 	
 	private Double totalPago;
 	
