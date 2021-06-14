@@ -47,7 +47,7 @@
 											<strong>¡Alto!</strong> ¿Se encuentra seguro de que desea proceder con la eliminación del transporte?
 										</div>
 									</div>
-									<form method="POST" th:action="@{/transporte/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" novalidate="novalidate" th:object="${transporte}">
+									<form method="POST" th:action="@{/transporte/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" th:object="${transporte}">
 										<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" />
 										<div class="row">
 											<div class="col-md-12 col-sm-12">

@@ -20,7 +20,13 @@ public final class Textos {
 	public static final String CLIENTES_LABEL = "clientes";
 	public static final String CLIENTE_LABEL = "cliente";
 	public static final String VENDEDOR_LABEL = "vendedor";
+	public static final String VENDEDORES_LABEL = "vendedores";
 	public static final String TRANSPORTE_LABEL = "transporte";
+	public static final String TRANSPORTES_LABEL = "transportes";
+	public static final String ENVASE_LABEL = "envase";
+	public static final String PEDIDO_LABEL = "pedido";
+	public static final String PEDIDOS_LABEL = "pedidos";
+
 	public static final String PROVINCIA_LABEL = "provincia";
 	public static final String PROVINCIAS_LABEL = "provincias";
 	public static final String TIPO_PRODUCTO_LABEL = "tipo";
@@ -65,10 +71,7 @@ public final class Textos {
 	public static final String INVENTARIO_LABEL ="inventario";
 	public static final String PRODUCTOS_LABEL ="productos";
 	
-	public static final String PEDIDOS_LABEL = "pedodos";
-	
-	public static final String PEDIDO_LABEL = "pedido";
-	
+		
 	
 	public static final String JPG = ".jpg";
 

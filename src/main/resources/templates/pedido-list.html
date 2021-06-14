@@ -9,12 +9,12 @@
 		<div class="content-wrapper">
 			<div class="content-header row">
 				<div class="content-header-left col-md-6 col-12 mb-2">
-					<h3 class="content-header-title">Gestión de Clientes</h3>
+					<h3 class="content-header-title">Gestión de Pedidos</h3>
 					<div class="row breadcrumbs-top">
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="/">Home</a></li>
-								<li class="breadcrumb-item active">Clientes</li>
+								<li class="breadcrumb-item active">Pedidos</li>
 							</ol>
 						</div>
 					</div>
@@ -26,16 +26,16 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title float-left">Listado de Clientes</h4>
+									<h4 class="card-title float-left">Listado de Pedidos</h4>
 									<div class="media width-250 float-right">
 										<div class="media-body media-right text-right">
-											<a href="/cliente/formulario" class="btn btn-primary"><i class="la la-plus"></i> Crear Cliente</a>
+											<a href="/pedido/formulario" class="btn btn-primary"><i class="la la-plus"></i> Crear Pedido</a>
 										</div>
 									</div>
 								</div>
 								<div class="card-body">
 									<div class="card-text">
-										<form th:action="@{/cliente/listado}">
+										<form th:action="@{/pedido/listado}">
 											<div class="input-group">
 												<input type="text" name="q" class="form-control square" placeholder="Buscar..." th:value="${q}" /> <span class="btn-group mb-1">
 													<button type="submit" name="search" title="Buscar" id="search-btn" class="btn btn-success square">
@@ -50,7 +50,6 @@
 											<thead class="thead-dark">
 												<tr>
 													<th th:replace="fragments/componentes/paginador :: columna(campo=nombre,columna=Nombre)"></th>
-													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Vendedor)"></th>													
 													<th th:replace="fragments/componentes/paginador :: columna(campo=descripcion,columna=Email)"></th>
 													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Telefono)"></th>
 													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Modificacion)"></th>
@@ -63,9 +62,6 @@
 														<div class="name" th:text="${entidad.nombre}"></div>
 													</td>
 													<td class="align-left">
-														<div class="name" th:text="${entidad?.vendedor?.nombre}"></div>
-													</td>
-													<td class="align-left">
 														<div class="name" th:text="${entidad.email}"></div>
 													</td>
 													<td class="align-left">
@@ -76,8 +72,8 @@
 													</td>
 													<td class="align-middle">
 														<div class="option" style="text-align: right;">
-															<a th:href="@{/cliente/formulario(accion=actualizar,id=__${entidad.id}__)}"> <i class="la la-pencil success"></i>
-															</a> <a th:href="@{/cliente/formulario(accion=eliminar,id=__${entidad.id}__)}"> <i class="la la-trash danger"></i>
+															<a th:href="@{/pedido/formulario(accion=actualizar,id=__${entidad.id}__)}"> <i class="la la-pencil success"></i>
+															</a> <a th:href="@{/pedido/formulario(accion=eliminar,id=__${entidad.id}__)}"> <i class="la la-trash danger"></i>
 															</a>
 														</div>
 													</td>

@@ -9,12 +9,12 @@
 		<div class="content-wrapper">
 			<div class="content-header row">
 				<div class="content-header-left col-md-6 col-12 mb-2">
-					<h3 class="content-header-title">Gestión de Clientes</h3>
+					<h3 class="content-header-title">Gestión de Envases</h3>
 					<div class="row breadcrumbs-top">
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="/">Home</a></li>
-								<li class="breadcrumb-item active">Clientes</li>
+								<li class="breadcrumb-item active">Envases</li>
 							</ol>
 						</div>
 					</div>
@@ -34,9 +34,9 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title" th:if="${accion == null or accion == 'guardar'}">Crear Cliente</h4>
-									<h4 class="card-title" th:if="${accion == 'actualizar'}">Actualizar Cliente</h4>
-									<h4 class="card-title" th:if="${accion == 'eliminar'}">Eliminar Cliente</h4>
+									<h4 class="card-title" th:if="${accion == null or accion == 'guardar'}">Crear Envase</h4>
+									<h4 class="card-title" th:if="${accion == 'actualizar'}">Actualizar Crear Envase</h4>
+									<h4 class="card-title" th:if="${accion == 'eliminar'}">Eliminar Crear Envase</h4>
 								</div>
 								<div class="card-body">
 									<div class="card-text">
@@ -44,10 +44,10 @@
 											<strong>¡Error!</strong> <span th:text="${error}">error</span>
 										</div>
 										<div th:if="${accion == 'eliminar'}" class="alert alert-danger" role="alert">
-											<strong>¡Alto!</strong> ¿Se encuentra seguro de que desea proceder con la eliminación del cliente?
+											<strong>¡Alto!</strong> ¿Se encuentra seguro de que desea proceder con la eliminación del envase?
 										</div>
 									</div>
-									<form method="POST" th:action="@{/cliente/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" th:object="${cliente}">
+									<form method="POST" th:action="@{/envase/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" th:object="${envase}">
 										<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" />
 										<div class="row">
 											<div class="col-md-12 col-sm-12">
@@ -55,25 +55,6 @@
 													<label for="holdername"> Nombre <span class="danger"> * </span>
 													</label> <input class="form-control" id="holdername" th:field="*{nombre}" th:value="*{nombre}" placeholder="Ingrese el nombre del país" type="text" required="true" />
 												</div>
-												<div class="form-group">
-													<label for="holdername"> Direccion
-													</label> <input class="form-control" id="holdername" th:field="*{direccion}" th:value="*{direccion}" placeholder="Ingrese la direccion del cliente" type="text" />
-												</div>
-												<div class="form-group">
-													<label for="holdername"> Telefono
-													</label> <input class="form-control" id="holdername" th:field="*{telefono}" th:value="*{telefono}" placeholder="Ingrese el telefono del cliente" type="text" />
-												</div>
-												<div class="form-group">
-													<label for="holdername"> Email
-													</label> <input class="form-control" id="holdername" th:field="*{email}" th:value="*{email}" placeholder="Ingrese el email del cliente" type="email" />
-												</div>
-												<div class="form-group">
-													<label for="holdername"> Vendedor</label>									
-													<select class="form-control select2 square" id="origen" name="vendedor" th:field="*{vendedor}" required="required">
-														<option value=""></option>
-														<option th:each="vendedor : ${vendedores}" th:text="${vendedor.nombre}" th:value="${vendedor.id}"></option>
-													</select>
-												</div>												
 											</div>
 											<div class="col-md-12 col-sm-12">
 												<div class="form-group">
@@ -83,7 +64,7 @@
 											</div>
 										</div>
 										<div class="form-actions text-right">
-											<a th:href="@{/cliente/listado}">
+											<a th:href="@{/envase/listado}">
 												<button type="button" class="btn btn-secondary">
 													<i class="la la-arrow-left"></i> Cancelar
 												</button>

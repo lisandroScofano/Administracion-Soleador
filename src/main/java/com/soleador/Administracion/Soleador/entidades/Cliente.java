@@ -6,6 +6,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -15,7 +18,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = -8783981358461384278L;
 
@@ -23,13 +26,15 @@ public class Cliente implements Serializable{
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
-	
+
 	private String nombre;
 	private String direccion;
 	private String telefono;
 	private String email;
 	private String observaciones;
 
+	@ManyToOne
+	private Vendedor vendedor;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date alta;
@@ -39,4 +44,15 @@ public class Cliente implements Serializable{
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modificacion;
+	
+	@PrePersist
+	public void agregarFechaAlta() {
+		alta = new Date();
+		modificacion = new Date();		
+	}
+
+	@PreUpdate
+	public void agregarFechaActualizacion() {
+		modificacion = new Date();
+	}
 }

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,12 +26,12 @@ public class ItemPedido implements Serializable {
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
-	
+
 	@ManyToOne
 	private ProductoVenta productoVenta;
-	
+
 	private Double cantidad;
-	
+
 	private Double precio;
 
 	@ManyToOne
@@ -43,4 +45,15 @@ public class ItemPedido implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modificacion;
+
+	@PrePersist
+	public void agregarFechaAlta() {
+		alta = new Date();
+		modificacion = new Date();
+	}
+
+	@PreUpdate
+	public void agregarFechaActualizacion() {
+		modificacion = new Date();
+	}
 }

@@ -47,7 +47,7 @@
 											<strong>¡Alto!</strong> ¿Se encuentra seguro de que desea proceder con la eliminación del vendedor?
 										</div>
 									</div>
-									<form method="POST" th:action="@{/vendedor/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" novalidate="novalidate" th:object="${vendedor}">
+									<form method="POST" th:action="@{/vendedor/} + ${accion == null or accion == 'actualizar' ? 'guardar' : accion}" id="formulario" th:object="${vendedor}">
 										<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" />
 										<div class="row">
 											<div class="col-md-12 col-sm-12">
