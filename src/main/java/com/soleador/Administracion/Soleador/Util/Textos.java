@@ -26,6 +26,8 @@ public final class Textos {
 	public static final String ENVASE_LABEL = "envase";
 	public static final String PEDIDO_LABEL = "pedido";
 	public static final String PEDIDOS_LABEL = "pedidos";
+	public static final String PRODUCTO_VENTA_LABEL = "productoVenta";
+	public static final String PRODUCTO_COMPRA_LABEL = "productoCompra";
 
 	public static final String PROVINCIA_LABEL = "provincia";
 	public static final String PROVINCIAS_LABEL = "provincias";

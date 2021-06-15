@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.soleador.Administracion.Soleador.enumeraciones.ContraReembolso;
 import com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido;
@@ -36,9 +37,11 @@ public class Pedido implements Serializable {
 	private Long numeroPedido;
 
 	@Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private Date fechaPedido;
 
 	@Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")	
 	private Date fechaRetiroDeposito;
 
 	@ManyToOne

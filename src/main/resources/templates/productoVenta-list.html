@@ -9,12 +9,12 @@
 		<div class="content-wrapper">
 			<div class="content-header row">
 				<div class="content-header-left col-md-6 col-12 mb-2">
-					<h3 class="content-header-title">Gestión de Pedidos</h3>
+					<h3 class="content-header-title">Gestión de Productos Venta</h3>
 					<div class="row breadcrumbs-top">
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="/">Home</a></li>
-								<li class="breadcrumb-item active">Pedidos</li>
+								<li class="breadcrumb-item active">Productos Venta</li>
 							</ol>
 						</div>
 					</div>
@@ -26,26 +26,16 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title float-left ">Filtrar por estado de Pedidos</h4>
-										<form th:action="@{/pedido/listadoPorEstado}">
-											<div class="col-2 float-left">
-												<select class="form-control" name="estado" onchange="this.form.submit()">
-													<option value=""></option>
-													<option th:value="${estado}" th:text="${estado}" th:if="${estado != null}" selected="selected"></option>
-													<option th:each="estado : ${T(com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido).values()}" th:text="${estado}" th:value="${estado}"></option>
-												</select>
-											</div>
-										</form>									
+									<h4 class="card-title float-left">Listado de Productos Venta</h4>
 									<div class="media width-250 float-right">
 										<div class="media-body media-right text-right">
-											<a href="/pedido/formulario" class="btn btn-primary"><i class="la la-plus"></i> Crear Pedido</a>
+											<a href="/productoVenta/formulario" class="btn btn-primary"><i class="la la-plus"></i> Crear Producto Venta</a>
 										</div>
 									</div>
 								</div>
 								<div class="card-body">
 									<div class="card-text">
-
-										<form th:action="@{/pedido/listado}">
+										<form th:action="@{/productoVenta/listado}">
 											<div class="input-group">
 												<input type="text" name="q" class="form-control square" placeholder="Buscar..." th:value="${q}" /> <span class="btn-group mb-1">
 													<button type="submit" name="search" title="Buscar" id="search-btn" class="btn btn-success square">
@@ -59,31 +49,31 @@
 										<table class="table alt-pagination">
 											<thead class="thead-dark">
 												<tr>
-													<th th:replace="fragments/componentes/paginador :: columna(campo=nombre,columna=cliente)"></th>
-													<th th:replace="fragments/componentes/paginador :: columna(campo=descripcion,columna=Fecha)"></th>
-													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Estado)"></th>
-													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Transporte)"></th>
+													<th th:replace="fragments/componentes/paginador :: columna(campo=nombre,columna=Nombre)"></th>
+													<th th:replace="fragments/componentes/paginador :: columna(campo=nombre,columna=Presentacion)"></th>
+													<th th:replace="fragments/componentes/paginador :: columna(campo=nombre,columna=Precio)"></th>
+													<th th:replace="fragments/componentes/paginador :: columna(campo=modificacion,columna=Modificacion)"></th>
 													<th>Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr th:each="entidad : ${page}">
 													<td class="align-left">
-														<div class="name" th:text="${entidad.cliente.nombre}"></div>
+														<div class="name" th:text="${entidad.nombre}"></div>
 													</td>
 													<td class="align-left">
-														<div class="name" th:text="${#dates.format(entidad.fechaPedido, 'dd-MM-yyyy')}"></div>
+														<div class="name" th:text="${entidad.presentacion}"></div>
 													</td>
 													<td class="align-left">
-														<div class="name" th:text="${entidad.estadoPedido}"></div>
+														<div class="name" th:text="${entidad.precio}"></div>
 													</td>
 													<td class="align-middle">
-														<div class="last-login" th:text="${entidad?.transporte?.nombre}"></div>
+														<div class="last-login" th:text="${entidad.modificacion} ? ${#dates.format(entidad.modificacion, 'dd-MM-yyyy HH:mm')}"></div>
 													</td>
 													<td class="align-middle">
 														<div class="option" style="text-align: right;">
-															<a th:href="@{/pedido/formulario(accion=actualizar,id=__${entidad.id}__)}"> <i class="la la-pencil success"></i>
-															</a> <a th:href="@{/pedido/formulario(accion=eliminar,id=__${entidad.id}__)}"> <i class="la la-trash danger"></i>
+															<a th:href="@{/productoVenta/formulario(accion=actualizar,id=__${entidad.id}__)}"> <i class="la la-pencil success"></i>
+															</a> <a th:href="@{/productoVenta/formulario(accion=eliminar,id=__${entidad.id}__)}"> <i class="la la-trash danger"></i>
 															</a>
 														</div>
 													</td>

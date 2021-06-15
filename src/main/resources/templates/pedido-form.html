@@ -57,13 +57,13 @@
 										<input type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" /> <input th:field="*{numeroPedido}" th:value="*{numeroPedido}" type="hidden" />
 										<div class="row">
 											<div class="col">
-												<label for="holdername"> Fecha de Pedido <span class="danger"> * </span></label> <input class="form-control" id="holdername" th:field="*{fechaPedido}" th:value="*{fechaPedido}" type="date" required="required" />
-											</div>
-											<div class="col">
 												<label for="holdername"> Cliente<span class="danger"> * </span></label> <select class="form-control" name="cliente" th:field="*{cliente}" required="required">
 													<option value=""></option>
 													<option th:each="cliente : ${clientes}" th:text="${cliente.nombre}" th:value="${cliente.id}"></option>
 												</select>
+											</div>
+											<div class="col">
+												<label for="holdername"> Fecha de Pedido <span class="danger"> * </span></label> <input class="form-control" id="holdername" th:field="*{fechaPedido}" th:value="*{fechaPedido}" type="date" required="required" />
 											</div>
 										</div>
 										<div class="row">
@@ -94,10 +94,65 @@
 												<label for="holdername"> Orden de compra </label> <input class="form-control" id="holdername" th:field="*{ordenDeCompra}" th:value="*{ordenDeCompra}" placeholder="Ingrese el telefono del cliente" type="text" />
 											</div>
 										</div>
-										<div class="col-md-12 col-sm-12">
-											<div class="form-group">
-												<label for="holdername"> Observaciones </label>
-												<textarea class="form-control" id="holdername" th:field="*{observaciones}" th:value="*{observaciones}"></textarea>
+										<div class="row">
+											<div class="col">
+												<div class="form-group">
+													<label for="holdername"> Observaciones </label>
+													<textarea class="form-control" id="holdername" th:field="*{observaciones}" th:value="*{observaciones}" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+										<!-- ZONA ITEMS PEDIDO -->
+										<div class="row">
+											<div class="col-md-4 col-sm-4">
+												<div class="form-group">
+													<label for="holdername"> Producto <span class="danger"> </span>
+													</label> <select class="form-control select2" id="producto">
+														<option value="">Seleccione producto</option>
+														<option th:each="producto : ${productoVenta}" th:text="${producto.nombre}" th:value="${producto.id}"></option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-2 col-sm-2">
+												<div class="form-group">
+													<label for="holdername"> Cantidad <span class="danger"> </span>
+													</label> <input class="form-control" id="cantidad" type="number" />
+												</div>
+											</div>
+											<div class="col-md-5 col-sm-5">
+												<div class="form-group">
+													<label for="holdername"> Precio </label> <input class="form-control" id="precio" type="number" />
+												</div>
+											</div>
+											<div class="col-md-12 col-sm-12 text-right">
+												<button type="button" class="btn botonVerde" onclick="agregar()">
+													<i class="la la-plus"></i> Agregar Producto
+												</button>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12 col-sm-12 mt-2">
+												<table class="table alt-pagination">
+													<thead class="fondoAzul">
+														<tr align="center">
+															<th>Producto</th>
+															<th>Cantidad</th>
+															<th>Precio</th>
+															<th>Sub Total</th>
+															<th>Acciones</th>
+														</tr>
+													</thead>
+													<tbody id="tabla">
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="row">
+										<div class="col-9"></div>
+											<div class="col-3 mt-5">
+												<h2>
+													Total Pedido: $<span id="totalVenta"></span>
+												</h2>
 											</div>
 										</div>
 										<div class="form-actions text-right">
@@ -128,5 +183,67 @@
 	<div class="sidenav-overlay"></div>
 	<div class="drag-target"></div>
 	<nav th:replace="fragments/componentes/plantilla :: footer"></nav>
+	<script type="text/javascript">
+		function eliminar(fila, indice) {
+			// 			console.log(indice)
+			// 			var total = document.getElementById('totalVenta').innerText;
+			// 			var subTotalEliminado =document.getElementById("subTotal[" + indice + "]").innerText;
+			// 			var total = parseFloat(total) - parseFloat(subTotalEliminado);
+			// 			document.getElementById('totalVenta').innerText = total;
+
+			$("#fila" + fila).remove();
+
+		}
+
+		function agregar() {
+			var cantidad = $("#cantidad").val();
+			var cliente = $("#cliente").val();
+			var productoId = $("#producto").val();
+			var producto = $("#producto option:selected").text();
+			var precio = $("#precio").val();
+			var SubTotal = precio * cantidad;
+			var indice = $('#tabla tr').length;
+
+			// 			if (cantidad === '' || precio === ''
+			// 					|| productoId === '' || cliente === '') {
+			// 				$("#errorJs").show();
+			// 			} else {
+			// 				$("#errorJs").hide();
+			// 				eliminar(productoId);
+
+			// 				$("#producto").focus();
+
+			$("#tabla")
+					.append(
+							'<tr align="center" id="fila' + productoId + '"><td>'
+									+ producto
+									+ '</td><td>'
+									+ cantidad
+									+ '</td><td>$ '
+									+ precio
+									+ '</td><td id="subTotal[' + indice + ']">$ '
+									+ SubTotal
+									+ '</td><td><input type="hidden" name="itemsPedido[' + indice + '].cantidad" value="' + cantidad + '"/><input type="hidden" name="itemsPedido[' + indice + '].precio" value="' + precio + '"/><input type="hidden" name="itemsPedido[' + indice + '].producto" value="' + productoId + '"/><a onclick="eliminar(\''
+									+ productoId
+									+ '\')"><i class="la la-trash danger"></i></a></td></tr>');
+			$("#cantidad").val('');
+			$("#precio").val('');
+			calcularTotalVenta(SubTotal);
+
+		}
+
+		// 		}
+		function calcularTotalVenta(SubTotal) {
+			var total = document.getElementById('totalVenta').innerText;
+			if (total === "") {
+				total = 0;
+			}
+			total = parseFloat(total) + parseFloat(SubTotal);
+
+			document.getElementById('totalVenta').innerText = total;
+		}
+
+		// 		document.getElementById('fecha').valueAsDate = new Date();
+	</script>
 </body>
 </html>

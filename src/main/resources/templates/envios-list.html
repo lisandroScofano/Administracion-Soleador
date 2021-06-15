@@ -26,16 +26,7 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title float-left ">Filtrar por estado de Pedidos</h4>
-										<form th:action="@{/pedido/listadoPorEstado}">
-											<div class="col-2 float-left">
-												<select class="form-control" name="estado" onchange="this.form.submit()">
-													<option value=""></option>
-													<option th:value="${estado}" th:text="${estado}" th:if="${estado != null}" selected="selected"></option>
-													<option th:each="estado : ${T(com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido).values()}" th:text="${estado}" th:value="${estado}"></option>
-												</select>
-											</div>
-										</form>									
+									<h4 class="card-title float-left">Listado de Pedidos</h4>
 									<div class="media width-250 float-right">
 										<div class="media-body media-right text-right">
 											<a href="/pedido/formulario" class="btn btn-primary"><i class="la la-plus"></i> Crear Pedido</a>
@@ -44,7 +35,6 @@
 								</div>
 								<div class="card-body">
 									<div class="card-text">
-
 										<form th:action="@{/pedido/listado}">
 											<div class="input-group">
 												<input type="text" name="q" class="form-control square" placeholder="Buscar..." th:value="${q}" /> <span class="btn-group mb-1">

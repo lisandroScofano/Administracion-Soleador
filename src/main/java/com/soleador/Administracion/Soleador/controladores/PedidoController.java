@@ -1,5 +1,8 @@
 package com.soleador.Administracion.Soleador.controladores;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -18,9 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.soleador.Administracion.Soleador.Error.WebException;
 import com.soleador.Administracion.Soleador.Util.Textos;
+import com.soleador.Administracion.Soleador.entidades.ItemPedido;
 import com.soleador.Administracion.Soleador.entidades.Pedido;
+import com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido;
+import com.soleador.Administracion.Soleador.models.PedidoModel;
 import com.soleador.Administracion.Soleador.servicios.ClienteService;
 import com.soleador.Administracion.Soleador.servicios.PedidoService;
+import com.soleador.Administracion.Soleador.servicios.ProductoVentaService;
 import com.soleador.Administracion.Soleador.servicios.TransporteService;
 
 @Controller
@@ -30,12 +37,15 @@ public class PedidoController extends Controlador {
 
 	@Autowired
 	private PedidoService pedidoService;
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private TransporteService transporteService;
+
+	@Autowired
+	private ProductoVentaService productoVentaService;
 
 	public PedidoController() {
 		super("pedido-list", "pedido-form");
@@ -43,7 +53,8 @@ public class PedidoController extends Controlador {
 
 	@PostMapping("/guardar")
 	public String guardar(HttpSession session, @Valid @ModelAttribute(Textos.PEDIDO_LABEL) Pedido pedido,
-			BindingResult resultado, ModelMap modelo) {
+			BindingResult resultado, ModelMap modelo,
+			@RequestParam(required = false, name = "itemPedido") List<ItemPedido> itemPedido) {
 		log.info("METODO: pedido.guardar -- PARAMETROS: " + pedido);
 		try {
 			if (resultado.hasErrors()) {
@@ -79,7 +90,7 @@ public class PedidoController extends Controlador {
 			@RequestParam(required = false) String accion) {
 
 		ModelAndView modelo = new ModelAndView(vistaFormulario);
-		Pedido pedido = new Pedido();
+		PedidoModel pedido = new PedidoModel();
 
 		if (accion == null || accion.isEmpty()) {
 			accion = Textos.GUARDAR_LABEL;
@@ -88,19 +99,22 @@ public class PedidoController extends Controlador {
 		if (id != null) {
 			pedido = pedidoService.buscar(id);
 		} else {
+			pedido.setFechaPedido(new Date());
 			pedido.setNumeroPedido(pedidoService.obtenerNumeroPedido());
 		}
 		modelo.addObject(Textos.CLIENTES_LABEL, clienteService.listarActivos());
 		modelo.addObject(Textos.TRANSPORTES_LABEL, transporteService.listarActivos());
 		modelo.addObject(Textos.PEDIDO_LABEL, pedido);
+		modelo.addObject(Textos.PRODUCTO_VENTA_LABEL, productoVentaService.listarActivos());
 		modelo.addObject(Textos.ACCION_LABEL, accion);
 		return modelo;
 	}
 
 	@GetMapping("/listado")
-	public ModelAndView listar(HttpSession session, Pageable paginable, @RequestParam(required = false) String q) {
+	public ModelAndView listarPedidosPendientes(HttpSession session, Pageable paginable,
+			@RequestParam(required = false) String q) {
 
-		log.info("METODO: pedido.listar() -- PARAMETROS: " + paginable);
+		log.info("METODO: pedido.listarPedidosPendientes() -- PARAMETROS: " + paginable);
 
 		ModelAndView modelo = new ModelAndView(vistaListado);
 		ordenar(paginable, modelo);
@@ -109,6 +123,29 @@ public class PedidoController extends Controlador {
 		if (q != null && !q.isEmpty()) {
 			modelo.addObject(Textos.QUERY_LABEL, q);
 		}
+		modelo.addObject(Textos.PAGE_LABEL, page);
+		modelo.addObject(Textos.URL_LABEL, "/pedido/listado");
+		modelo.addObject(Textos.PEDIDO_LABEL, new Pedido());
+
+		return modelo;
+	}
+
+	@GetMapping("/listadoPorEstado")
+	public ModelAndView listarPedidosPorEstado(HttpSession session, Pageable paginable,
+			@RequestParam(required = false) String estado) {
+
+		log.info("METODO: pedido.listarPedidosPorEstado() -- PARAMETROS: " + paginable);
+
+		ModelAndView modelo = new ModelAndView(vistaListado);
+		ordenar(paginable, modelo);
+		Page<Pedido> page = null;
+		if (estado == null || estado.isEmpty()) {
+			page = pedidoService.listarActivos(paginable, null);
+		} else {
+			page = pedidoService.listarPedidosActivosPorEstadoPedido(paginable, null, EstadoPedido.valueOf(estado));
+		}
+
+		modelo.addObject("estado", estado);
 		modelo.addObject(Textos.PAGE_LABEL, page);
 		modelo.addObject(Textos.URL_LABEL, "/pedido/listado");
 		modelo.addObject(Textos.PEDIDO_LABEL, new Pedido());

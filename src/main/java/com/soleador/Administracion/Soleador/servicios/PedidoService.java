@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.soleador.Administracion.Soleador.Error.WebException;
 import com.soleador.Administracion.Soleador.entidades.Pedido;
+import com.soleador.Administracion.Soleador.enumeraciones.EstadoPedido;
 import com.soleador.Administracion.Soleador.repositorios.PedidoRepository;
 
 @Service
@@ -56,6 +57,13 @@ public class PedidoService {
 			return pedidoRepository.buscarActivos(paginable, "%" + q + "%");
 		}
 		return pedidoRepository.buscarActivos(paginable);
+	}
+	
+	public Page<Pedido> listarPedidosActivosPorEstadoPedido(Pageable paginable, String q, EstadoPedido estado) {
+		if ((q != null && !q.isEmpty())) {
+			return pedidoRepository.buscarActivosPorEstado(paginable, "%" + q + "%", estado);
+		}
+		return pedidoRepository.buscarActivosPorEstado(paginable, estado);
 	}
 
 	public List<Pedido> listarActivos() {
